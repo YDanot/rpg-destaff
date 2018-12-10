@@ -10,6 +10,11 @@ public class RpgTest {
         Assertions.assertThat(aNewCharacter().health()).isEqualTo(1000);
     }
 
+    @Test
+    public void new_character_should_start_at_level_1() {
+        Assertions.assertThat(aNewCharacter().level()).isEqualTo(1);
+    }
+
     private RpgCharacter aNewCharacter() {
         return new RpgCharacter();
     }
@@ -17,6 +22,10 @@ public class RpgTest {
     private class RpgCharacter {
         public int health() {
             return 1000;
+        }
+
+        public int level() {
+            return 1;
         }
     }
 }
