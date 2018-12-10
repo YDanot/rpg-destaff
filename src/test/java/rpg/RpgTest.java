@@ -15,6 +15,11 @@ public class RpgTest {
         Assertions.assertThat(aNewCharacter().level()).isEqualTo(1);
     }
 
+    @Test
+    public void new_character_should_be_alive() {
+        Assertions.assertThat(aNewCharacter().isAlive()).isTrue();
+    }
+
     private RpgCharacter aNewCharacter() {
         return new RpgCharacter();
     }
@@ -27,5 +32,10 @@ public class RpgTest {
         public int level() {
             return 1;
         }
+
+        public boolean isAlive() {
+            return health() > 0;
+        }
     }
+
 }
