@@ -68,6 +68,25 @@ public class RpgTest {
         return new RpgCharacter();
     }
 
+    interface HealthEvent {
+        int replayOn(int currentHealth);
+    }
+
+    class DamageEvent implements HealthEvent {
+
+        private final int amount;
+
+        DamageEvent(int amount) {
+            this.amount = amount;
+        }
+
+        @Override
+        public int replayOn(int currentHealth) {
+            return Math.max(0, currentHealth - amount);
+        }
+
+    }
+
     private class RpgCharacter {
 
         private static final int MAX_HEALTH = 1000;
