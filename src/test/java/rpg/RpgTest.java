@@ -20,13 +20,24 @@ public class RpgTest {
         Assertions.assertThat(aNewCharacter().isAlive()).isTrue();
     }
 
+    @Test
+    public void character_can_damage_another() {
+        RpgCharacter attacker = aNewCharacter();
+        RpgCharacter target = aNewCharacter();
+        attacker.attack(target, 200);
+        Assertions.assertThat(target.health()).isEqualTo(800);
+    }
+
     private RpgCharacter aNewCharacter() {
         return new RpgCharacter();
     }
 
     private class RpgCharacter {
+
+        private int health = 1000;
+
         public int health() {
-            return 1000;
+            return health;
         }
 
         public int level() {
@@ -35,6 +46,10 @@ public class RpgTest {
 
         public boolean isAlive() {
             return health() > 0;
+        }
+
+        public void attack(RpgCharacter target, int damage) {
+            target.health = target.health - damage;
         }
     }
 
