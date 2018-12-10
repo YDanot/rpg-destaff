@@ -56,6 +56,14 @@ public class RpgTest {
         Assertions.assertThat(target.isAlive()).isFalse();
     }
 
+    @Test
+    public void character_cannot_be_healed_over_1000() {
+        RpgCharacter attacker = aNewCharacter();
+        RpgCharacter target = aNewCharacter();
+        attacker.heal(target,100);
+        Assertions.assertThat(target.health()).isEqualTo(1000);
+    }
+
     private RpgCharacter aNewCharacter() {
         return new RpgCharacter();
     }
@@ -82,7 +90,7 @@ public class RpgTest {
 
         public void heal(RpgCharacter target, int health) {
             if (target.isAlive()){
-                target.health = target.health + health;
+                target.health = Math.min(target.health + health, 1000);
             }
         }
     }
