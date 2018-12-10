@@ -100,7 +100,7 @@ public class RpgTest {
 
         @Override
         public int replayOn(int currentHealth) {
-            return Math.min(1000, currentHealth + amount);
+            return Math.min(RpgCharacter.MAX_HEALTH, currentHealth + amount);
         }
 
     }
@@ -108,7 +108,7 @@ public class RpgTest {
 
     private class RpgCharacter {
 
-        private static final int MAX_HEALTH = 1000;
+        public static final int MAX_HEALTH = 1000;
         private int health = MAX_HEALTH;
         private Collection<HealthEvent> healthEvents = new ArrayList<>();
 
