@@ -86,7 +86,7 @@ public class RpgTest {
         }
 
         public void attack(RpgCharacter target, int damage) {
-            target.health = Math.max(0, target.health - damage);
+            target.attackedFor(damage);
         }
 
         public void heal(RpgCharacter target, int health) {
@@ -97,6 +97,10 @@ public class RpgTest {
             if (isAlive()) {
                 this.health = Math.min(this.health + health, MAX_HEALTH);
             }
+        }
+
+        private void attackedFor(int damage) {
+            health = Math.max(0, health - damage);
         }
 
     }
