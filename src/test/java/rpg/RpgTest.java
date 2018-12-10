@@ -70,7 +70,8 @@ public class RpgTest {
 
     private class RpgCharacter {
 
-        private int health = 1000;
+        private static final int MAX_HEALTH = 1000;
+        private int health = MAX_HEALTH;
 
         public int health() {
             return health;
@@ -90,7 +91,7 @@ public class RpgTest {
 
         public void heal(RpgCharacter target, int health) {
             if (target.isAlive()){
-                target.health = Math.min(target.health + health, 1000);
+                target.health = Math.min(target.health + health, MAX_HEALTH);
             }
         }
     }
