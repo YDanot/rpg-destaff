@@ -37,6 +37,15 @@ public class RpgTest {
         Assertions.assertThat(target.health()).isEqualTo(1000);
     }
 
+    @Test
+    public void character_can_die_from_damage() {
+        RpgCharacter attacker = aNewCharacter();
+        RpgCharacter target = aNewCharacter();
+        attacker.attack(target, 1200);
+        Assertions.assertThat(target.health()).isEqualTo(0);
+        Assertions.assertThat(target.isAlive()).isFalse();
+    }
+
     private RpgCharacter aNewCharacter() {
         return new RpgCharacter();
     }
@@ -58,7 +67,7 @@ public class RpgTest {
         }
 
         public void attack(RpgCharacter target, int damage) {
-            target.health = target.health - damage;
+            target.health = Math.max(0, target.health - damage);
         }
 
         public void heal(RpgCharacter target, int health) {
