@@ -3,6 +3,9 @@ package rpg;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class RpgTest {
 
     @Test
@@ -87,13 +90,34 @@ public class RpgTest {
 
     }
 
+    class HealEvent implements HealthEvent {
+
+        private final int amount;
+
+        HealEvent(int amount) {
+            this.amount = amount;
+        }
+
+        @Override
+        public int replayOn(int currentHealth) {
+            return Math.min(1000, currentHealth + amount);
+        }
+
+    }
+
+
     private class RpgCharacter {
 
         private static final int MAX_HEALTH = 1000;
         private int health = MAX_HEALTH;
+        private Collection<HealthEvent> healthEvents = new ArrayList<>();
 
         public int health() {
-            return health;
+            int currentHealth = this.health;
+            for (HealthEvent event : healthEvents) {
+                currentHealth = event.replayOn(currentHealth);
+            }
+            return currentHealth;
         }
 
         public int level() {
@@ -114,12 +138,12 @@ public class RpgTest {
 
         private void healedFor(int health) {
             if (isAlive()) {
-                this.health = Math.min(this.health + health, MAX_HEALTH);
+                healthEvents.add(new HealEvent(health));
             }
         }
 
         private void attackedFor(int damage) {
-            health = Math.max(0, health - damage);
+            healthEvents.add(new DamageEvent(damage));
         }
 
     }
